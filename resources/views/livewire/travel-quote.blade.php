@@ -72,7 +72,8 @@
 
         <!-- Number of Travelers -->
         <div>
-            <label for="numberOfTravelers" class="block text-lg font-medium text-gray-800 mb-2">Number of Travelers</label>
+            <label for="numberOfTravelers" class="block text-lg font-medium text-gray-800 mb-2">Number of
+                Travelers</label>
             <input
                 type="number"
                 wire:model="numberOfTravelers"
