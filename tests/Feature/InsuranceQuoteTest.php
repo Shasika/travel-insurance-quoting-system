@@ -2,9 +2,6 @@
 
 use Illuminate\Support\Facades\DB;
 use Livewire\Livewire;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-
-uses(RefreshDatabase::class); // Ensures a fresh database state for every test
 
 /**
  * Test the submission of the insurance quote form.
@@ -12,8 +9,8 @@ uses(RefreshDatabase::class); // Ensures a fresh database state for every test
 it('submits the insurance quote form and stores the data', function () {
     Livewire::test(\App\Livewire\TravelQuote::class)
         ->set('destination', 'Asia')
-        ->set('startDate', '2024-01-01')
-        ->set('endDate', '2024-01-10')
+        ->set('startDate', '2025-10-01')
+        ->set('endDate', '2025-10-15')
         ->set('coverageOptions', ['Medical Expenses'])
         ->set('numberOfTravelers', 1)
         ->call('calculateQuote');
@@ -21,8 +18,8 @@ it('submits the insurance quote form and stores the data', function () {
     // Assert that non-JSON data is saved correctly
     $this->assertDatabaseHas('insurance_quotes', [
         'destination' => 'Asia',
-        'start_date' => '2024-01-01',
-        'end_date' => '2024-01-10',
+        'start_date' => '2025-10-01',
+        'end_date' => '2025-10-15',
         'number_of_travelers' => 1,
     ]);
 
@@ -42,14 +39,14 @@ it('submits the insurance quote form and stores the data', function () {
 it('displays the quote summary correctly', function () {
     Livewire::test(\App\Livewire\TravelQuote::class)
         ->set('destination', 'America')
-        ->set('startDate', '2024-01-01')
-        ->set('endDate', '2024-01-10')
+        ->set('startDate', '2025-10-01')
+        ->set('endDate', '2025-10-15')
         ->set('coverageOptions', ['Medical Expenses', 'Trip Cancellation'])
         ->set('numberOfTravelers', 2)
         ->call('calculateQuote')
         ->assertSee('America')
-        ->assertSee('2024-01-01')
-        ->assertSee('2024-01-10')
+        ->assertSee('2025-10-01')
+        ->assertSee('2025-10-15')
         ->assertSee('Medical Expenses, Trip Cancellation')
         ->assertSee('$160'); // Total price
 });
@@ -60,8 +57,8 @@ it('displays the quote summary correctly', function () {
 it('fails validation when startDate is after endDate', function () {
     Livewire::test(\App\Livewire\TravelQuote::class)
         ->set('destination', 'Europe')
-        ->set('startDate', '2024-01-10') // Invalid: Start date is after end date
-        ->set('endDate', '2024-01-01')   // Invalid: End date is before start date
+        ->set('startDate', '2025-10-10') // Invalid: Start date is after end date
+        ->set('endDate', '2025-10-01')   // Invalid: End date is before start date
         ->call('calculateQuote')
         ->assertHasErrors(['endDate' => 'after_or_equal']);
 });
@@ -72,8 +69,8 @@ it('fails validation when startDate is after endDate', function () {
 it('calculates the correct quote price with no coverage options', function () {
     Livewire::test(\App\Livewire\TravelQuote::class)
         ->set('destination', 'Europe')
-        ->set('startDate', '2024-01-01')
-        ->set('endDate', '2024-01-10')
+        ->set('startDate', '2025-10-01')
+        ->set('endDate', '2025-10-15')
         ->set('coverageOptions', []) // No coverage selected
         ->set('numberOfTravelers', 1)
         ->call('calculateQuote')

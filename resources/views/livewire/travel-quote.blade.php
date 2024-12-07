@@ -13,9 +13,9 @@
                 class="block w-full border-gray-300 rounded-lg shadow-md focus:ring-indigo-500 focus:border-indigo-500 sm:text-base p-3"
             >
                 <option value="">Select Your Destination</option>
-                <option value="Europe">Europe (+$10)</option>
-                <option value="Asia">Asia (+$20)</option>
-                <option value="America">America (+$30)</option>
+                @foreach (\App\Utils\Constants::DESTINATIONS as $key => $price)
+                    <option value="{{ $key }}">{{ $key }} (+${{ $price }})</option>
+                @endforeach
             </select>
             @error('destination') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
         </div>
@@ -26,8 +26,9 @@
                 <label for="startDate" class="block text-lg font-medium text-gray-800 mb-2">Start Date</label>
                 <input
                     type="date"
-                    wire:model="startDate"
+                    wire:model.lazy="startDate"
                     id="startDate"
+                    min="{{ now()->toDateString() }}"
                     class="block w-full border-gray-300 rounded-lg shadow-md focus:ring-indigo-500 focus:border-indigo-500 sm:text-base p-3"
                 />
                 @error('startDate') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
@@ -38,6 +39,8 @@
                     type="date"
                     wire:model="endDate"
                     id="endDate"
+                    :disabled="!$wire.startDate"
+                    :min="$wire.startDate ? $wire.startDate : ''"
                     class="block w-full border-gray-300 rounded-lg shadow-md focus:ring-indigo-500 focus:border-indigo-500 sm:text-base p-3"
                 />
                 @error('endDate') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
