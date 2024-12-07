@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Repositories\InsuranceQuoteRepositoryInterface;
+use App\Utils\Constants;
 use Livewire\Component;
 
 /**
@@ -35,6 +36,12 @@ class TravelQuote extends Component
         'numberOfTravelers' => 'required|integer|min:1',
     ];
 
+    // Access the constant
+    public function getDestinations()
+    {
+        return Constants::DESTINATIONS;
+    }
+
     /**
      * Calculates the insurance quote and saves/updates it in the database.
      *
@@ -55,28 +62,21 @@ class TravelQuote extends Component
         $coverageCost = array_sum(array_map(fn($option) => $coveragePrices[$option] ?? 0, $this->coverageOptions));
         $this->quotePrice = $this->numberOfTravelers * ($destinationCost + $coverageCost);
 
-        // Save or update the quote in the database
-        if ($this->quoteId) {
-            // Update existing quote
-            $repository->updateQuote($this->quoteId, [
-                'destination' => $this->destination,
-                'start_date' => $this->startDate,
-                'end_date' => $this->endDate,
-                'coverage_options' => json_encode($this->coverageOptions),
-                'number_of_travelers' => $this->numberOfTravelers,
-                'price' => $this->quotePrice,
-            ]);
-        } else {
-            // Save new quote and store its ID
-            $this->quoteId = $repository->saveQuote([
-                'destination' => $this->destination,
-                'start_date' => $this->startDate,
-                'end_date' => $this->endDate,
-                'coverage_options' => json_encode($this->coverageOptions),
-                'number_of_travelers' => $this->numberOfTravelers,
-                'price' => $this->quotePrice,
-            ])->id;
-        }
+        // Prepare the quote data
+        $data = [
+            'destination' => $this->destination,
+            'start_date' => $this->startDate,
+            'end_date' => $this->endDate,
+            'coverage_options' => json_encode($this->coverageOptions),
+            'number_of_travelers' => $this->numberOfTravelers,
+            'price' => $this->quotePrice,
+        ];
+
+        // Save or update the quote
+        $this->quoteId
+            ? $repository->updateQuote($this->quoteId, $data)
+            : $this->quoteId = $repository->saveQuote($data)->id;
+
     }
 
     /**
@@ -117,6 +117,20 @@ class TravelQuote extends Component
         $this->numberOfTravelers = 1;
         $this->quotePrice = 0;
         $this->quoteId = null;
+    }
+
+    /**
+     * Handle changes to the startDate property.
+     *
+     * @param string $value The updated value of the `startDate` property.
+     * @return void
+     */
+    public function updatedStartDate($value)
+    {
+        // Check if endDate is set and is earlier than the updated startDate
+        if ($this->endDate && $this->endDate < $value) {
+            $this->endDate = null; // Reset endDate if it is invalid
+        }
     }
 
     /**
