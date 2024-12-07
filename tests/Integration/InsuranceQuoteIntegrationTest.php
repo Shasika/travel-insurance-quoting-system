@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
 use App\Models\InsuranceQuote;
 
@@ -11,8 +10,8 @@ it('handles the complete flow of insurance quoting', function () {
     // Simulate user inputs
     $response = Livewire::test(\App\Livewire\TravelQuote::class)
         ->set('destination', 'America')
-        ->set('startDate', '2024-01-01')
-        ->set('endDate', '2024-01-10')
+        ->set('startDate', '2025-10-01')
+        ->set('endDate', '2025-10-15')
         ->set('coverageOptions', ['Medical Expenses', 'Trip Cancellation'])
         ->set('numberOfTravelers', 2)
         ->call('calculateQuote');
@@ -20,8 +19,8 @@ it('handles the complete flow of insurance quoting', function () {
     // Assert database contains the saved quote (non-JSON columns)
     $this->assertDatabaseHas('insurance_quotes', [
         'destination' => 'America',
-        'start_date' => '2024-01-01',
-        'end_date' => '2024-01-10',
+        'start_date' => '2025-10-01',
+        'end_date' => '2025-10-15',
         'number_of_travelers' => 2,
     ]);
 
@@ -43,8 +42,8 @@ it('handles the complete flow of insurance quoting', function () {
 
     // Verify the output of the Livewire component
     $response->assertSee('America')
-        ->assertSee('2024-01-01')
-        ->assertSee('2024-01-10')
+        ->assertSee('2025-10-01')
+        ->assertSee('2025-10-15')
         ->assertSee('Medical Expenses, Trip Cancellation')
         ->assertSee('$160'); // Total price
 });

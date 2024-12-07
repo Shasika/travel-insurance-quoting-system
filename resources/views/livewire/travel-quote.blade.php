@@ -28,6 +28,7 @@
                     type="date"
                     wire:model="startDate"
                     id="startDate"
+                    min="{{ now()->toDateString() }}"
                     class="block w-full border-gray-300 rounded-lg shadow-md focus:ring-indigo-500 focus:border-indigo-500 sm:text-base p-3"
                 />
                 @error('startDate') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror

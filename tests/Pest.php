@@ -3,12 +3,14 @@
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-// Apply TestCase globally for Feature and Integration tests
-uses(TestCase::class)->in('Feature', 'Integration');
+/**
+ * Apply the Laravel TestCase class to Unit, Feature and Integration tests.
+ * This ensures Laravel's testing infrastructure is available for these test types.
+ */
+uses(TestCase::class)->in('Unit', 'Feature', 'Integration');
 
-// Include RefreshDatabase only for tests that interact with the database
+/**
+ * Include RefreshDatabase trait for Feature and Integration tests.
+ * This ensures a clean database state before each test by rolling back migrations.
+ */
 uses(RefreshDatabase::class)->in('Feature', 'Integration');
-
-// Optionally apply TestCase to Unit tests if needed
-// Note: Unit tests typically don't require Laravel's application context.
-uses(TestCase::class)->in('Unit');
