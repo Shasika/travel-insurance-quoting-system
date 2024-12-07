@@ -11,10 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('posts', function (Blueprint $table) {
+        Schema::create('insurance_quotes', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->text('content');
+            $table->string('destination');
+            $table->date('start_date');
+            $table->date('end_date');
+            $table->json('coverage_options');
+            $table->integer('number_of_travelers');
+            $table->decimal('price', 10, 2);
             $table->timestamps();
         });
     }
@@ -24,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('posts');
+        Schema::dropIfExists('insurance_quotes');
     }
 };

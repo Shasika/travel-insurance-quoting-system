@@ -1,7 +1,6 @@
 <?php
 
+use App\Livewire\TravelQuote;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', TravelQuote::class)->name('home');

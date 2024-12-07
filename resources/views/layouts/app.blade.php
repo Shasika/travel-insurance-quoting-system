@@ -15,28 +15,28 @@
     @livewireStyles
 </head>
 <body class="bg-gray-100 font-sans leading-normal tracking-normal">
-    <!-- Navbar -->
-    <nav class="bg-blue-600 shadow-md">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-                <div class="flex items-center">
-                    <a href="/" class="text-white font-bold text-xl">Travel Insurance Quote</a>
-                </div>
+<!-- Navbar -->
+<nav class="bg-blue-600 shadow-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+            <div class="flex items-center">
+                <a href="/" class="text-white font-bold text-xl">Travel Insurance Quote</a>
             </div>
         </div>
-    </nav>
+    </div>
+</nav>
 
-    <!-- Main Content Area -->
-    <main class="py-8">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white shadow-md rounded-lg p-6">
-                @yield('content')
-            </div>
+<!-- Main Content Area -->
+<main class="py-8">
+    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="bg-white shadow-md rounded-lg p-6">
+            @yield('content')
         </div>
-    </main>
+    </div>
+</main>
 
-    <!-- Livewire Scripts -->
-    @livewireScripts
+<!-- Livewire Scripts -->
+@livewireScripts
 </body>
 </html>
 
