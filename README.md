@@ -59,7 +59,7 @@ php artisan key:generate
 ```bash
 php artisan migrate
 ```
-### ### Step 7: Start the Application
+### Step 7: Start the Application
 ```bash
 php artisan serve
 npm run dev
