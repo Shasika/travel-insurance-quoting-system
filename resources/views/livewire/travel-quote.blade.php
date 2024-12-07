@@ -4,6 +4,7 @@
     </h1>
 
     <form wire:submit.prevent="calculateQuote" class="space-y-8">
+        @csrf
         <!-- Destination -->
         <div>
             <label for="destination" class="block text-lg font-medium text-gray-800 mb-2">Destination</label>
