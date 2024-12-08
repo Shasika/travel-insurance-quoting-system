@@ -15,9 +15,9 @@
 <!-- Navbar -->
 <nav class="bg-blue-600 shadow-md">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex items-center justify-between h-16">
+        <div class="flex items-center justify-between h-12">
             <div class="flex items-center">
-                <a href="/" class="text-white font-bold text-xl">Travel Insurance Quote</a>
+                <a href="/" class="text-white font-bold text-xl"></a>
             </div>
         </div>
     </div>
@@ -26,7 +26,7 @@
 <!-- Main Content Area -->
 <main class="py-8">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <div class="bg-white shadow-md rounded-lg p-6">
+        <div class="bg-white shadow-md rounded-lg p-4">
             @yield('content')
         </div>
     </div>
